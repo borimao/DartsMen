@@ -7,6 +7,7 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 body .scores {
@@ -19,6 +20,7 @@ body .scores {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  font-style: italic;
 }
 
 .player .log {
