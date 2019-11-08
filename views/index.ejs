@@ -3,9 +3,12 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/javascripts/index.js"></script>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div class="scores">
+    </div>
+    <canvas id="canvas" width="730" height="730"></canvas>
+    <div class="round_area">ROUND <span class="round_count">1</span></div>
   </body>
 </html>

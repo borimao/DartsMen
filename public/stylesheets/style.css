@@ -1,8 +1,112 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-a {
-  color: #00B7FF;
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
+
+body .scores {
+  width: calc(100% - 730px);
+}
+
+.player {
+  width: calc(100% - 20px);
+  height: calc(100% / 4 - 20px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.player .log {
+  width: 80px;
+  height: 100%;
+  background-color: #000;
+}
+
+.player .log div {
+  width: 100%;
+  height: calc(100% / 3);
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.player .score {
+  width: calc(100% - 80px);
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.player .score .score_num {
+  font-size: 150px;
+  height: 150px;
+  line-height: 150px;
+  font-weight: bold;
+}
+
+.p_0 {
+  border: #c40000 10px solid;
+}
+
+.play_0 {
+  background-color: #c40000;
+  color: #fff;
+}
+
+.p_1 {
+  border: #1900ff 10px solid;
+}
+
+.play_1 {
+  background-color: #1900ff;
+  color: #fff;
+}
+
+.p_2 {
+  border: #069e01 10px solid;
+}
+
+.play_2 {
+  background-color: #069e01;
+  color: #fff;
+}
+
+.p_3 {
+  border: #dde000 10px solid;
+}
+
+.play_3 {
+  background-color: #dde000;
+  color: #fff;
+}
+
+.round_area {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #fff;
+  height: 50px;
+  width: 150px;
+  line-height: 60px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.round_area span {
+  font-size: 40px;
+  font-weight: bold;
+}
+/*# sourceMappingURL=en.css.map */
