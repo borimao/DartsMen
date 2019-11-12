@@ -354,16 +354,6 @@ const BoadMake = () => {
     context.stroke();
     s_select[rgb] = "BULL";
 
-/*
-    var startAngle = 0;
-    var endAngle = startAngle + 360;
-    context.beginPath () ;
-    context.arc( 365, 365, 480, startAngle * Math.PI / 180, endAngle * Math.PI / 180, false ) ;
-    rgb = "rgb(1, 1, 1, 1)";
-    context.strokeStyle = rgb
-    context.lineWidth = 330 ;
-    context.stroke();
-*/
     context.beginPath () ;
     context.fillStyle = "#fff";
     context.font = "48px Helvetica";
