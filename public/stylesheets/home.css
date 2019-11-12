@@ -13,6 +13,8 @@ body{
 }
 
 .item{
+  display: flex;
+  align-items: center;
   border-radius: 1rem;
   margin:2%;
   box-sizing: border-box;
@@ -38,6 +40,10 @@ body{
 .items--left{
   height:90%;
 }
+.items--left>.item{
+  justify-content: start;
+  padding-left:10%;
+}
 .item__smash{
   background: linear-gradient(135deg, #f89174, #dc1432);      
   height: calc(60% - 4%);
@@ -55,6 +61,7 @@ body{
 }
 .items--right>.item{
   margin-right: -2%;
+  justify-content: center;
 }
 .item__something{
   background: linear-gradient(225deg, #87cefa, #4169e1);
@@ -69,6 +76,10 @@ body{
   height: calc(40% - 4%);
 }
 
+.coming-soon{
+  font-family: Courier;
+  font-size: 3rem;
+}
 
 /* darts kun */
 #darts-kun{
