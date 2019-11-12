@@ -8,6 +8,7 @@ body{
   height: 95vh;
 }
 .home--column{
+  width: 50%;
   flex-grow: 1;
 }
 
@@ -19,7 +20,20 @@ body{
 
 /* left */
 #title{
+  width: 100%;
   height:10%;
+  font-size:2rem; 
+  padding-left:3rem;
+}
+#title>h1{
+  color: #fff;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+#title>h1>span{
+  color: #dc1432;
 }
 .items--left{
   height:90%;
