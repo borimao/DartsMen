@@ -35,6 +35,8 @@ body {
 
 body .scores {
   width: calc(100% - 730px);
+  height: 730px;
+  overflow: scroll;
 }
 
 .back_btn_area {

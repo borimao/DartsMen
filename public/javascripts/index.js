@@ -1,4 +1,4 @@
-const p_num = 2
+const p_num = 4
 const zero_one = 301;
 const myXml = new XMLHttpRequest();
 
