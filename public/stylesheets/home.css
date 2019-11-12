@@ -25,11 +25,11 @@ body{
   height:90%;
 }
 .item__smash{
-background-color: red;
+  background: linear-gradient(135deg, #f89174, #dc1432);      
   height: calc(60% - 4%);
 }
 .item__splits{
-  background-color: green;
+  background: linear-gradient(45deg, #3cb371, #228b22);
   height: calc(40% - 4%);
 }
 
@@ -43,15 +43,15 @@ background-color: red;
   margin-right: -2%;
 }
 .item__something{
-  background-color: blue;
+  background: linear-gradient(225deg, #87cefa, #4169e1);
   height: calc(35% - 4%);
 }
 .item__collection{
-  background-color: pink;
+  background: linear-gradient(280deg,#ffc0cb, #ee82ee);
   height: calc(25%);
 }
 .item__online{
-  background-color: yellow;
+  background: linear-gradient(310deg, #adff2f, #ffa500);
   height: calc(40% - 4%);
 }
 
