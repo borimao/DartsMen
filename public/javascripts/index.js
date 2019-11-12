@@ -1,4 +1,4 @@
-const p_num = 2
+const p_num = 4
 const zero_one = 301;
 const myXml = new XMLHttpRequest();
 
@@ -20,6 +20,7 @@ myXml.onreadystatechange = function() {
         for(let i=0; i<p_num; i++){
             document.querySelectorAll(".player")[i].classList.add("p_" + i);
             document.querySelectorAll(".score_num")[i].innerText = zero_one;
+            document.querySelectorAll(".name")[i].innerText = "PLAYER_" + (i + 1);
             logs.players.push({
                 name:"player_" + (i+1),
                 score:zero_one,
@@ -34,7 +35,7 @@ myXml.onreadystatechange = function() {
                 ]
             })
         }
-        document.querySelectorAll(".player")[0].classList.add("play_" + 0);
+        document.querySelectorAll(".player")[0].classList.add("play");
         BoadMake();
         let copy_logs = JSON.parse(JSON.stringify(logs))
         back_up_log.logs.push(copy_logs);
@@ -132,7 +133,7 @@ const BackLog = () => {
 const ScoreChange = ()=> {
     let now = logs.now;
     for(let i=0; i<logs.players.length; i++){
-        document.querySelectorAll(".player")[i].classList.remove("play_" + i);
+        document.querySelectorAll(".player")[i].classList.remove("play");
         document.querySelectorAll(".score_num")[i].innerText = logs.players[i].score;
         for(let j=0; j<3; j++){
             document.querySelectorAll('.log')[i].children[j].innerText = logs.players[i].log[logs.players[i].log.length - 1][j];
@@ -144,7 +145,7 @@ const ScoreChange = ()=> {
         }
     }
     document.querySelector('.round_count').innerText = now.round;
-    document.querySelectorAll(".player")[now.player].classList.add("play_" + now.player);
+    document.querySelectorAll(".player")[now.player].classList.add("play");
 }
 
 //ダーツボード生成するやつ
@@ -353,17 +354,6 @@ const BoadMake = () => {
     context.stroke();
     s_select[rgb] = "BULL";
 
-
-    var startAngle = 0;
-    var endAngle = startAngle + 360;
-    context.beginPath () ;
-    context.arc( 365, 365, 480, startAngle * Math.PI / 180, endAngle * Math.PI / 180, false ) ;
-    rgb = "rgb(1, 1, 1, 1)";
-    context.strokeStyle = rgb
-    context.lineWidth = 330 ;
-    context.stroke();
-    s_select[rgb] = "OUT";
-
     context.beginPath () ;
     context.fillStyle = "#fff";
     context.font = "48px Helvetica";
@@ -388,8 +378,6 @@ const BoadMake = () => {
     context.fillText("6", 690, 380);
     context.fillText("11", -5, 380);
     context.stroke();
-    rgb = "rgb(255, 255, 255, 1)";
-    s_select[rgb] = "OUT";
 
     function onClick(e) {
         var rect = e.target.getBoundingClientRect();
@@ -398,7 +386,10 @@ const BoadMake = () => {
 
         var imagedata = context.getImageData(x, y, 1, 1);
         const rgb = "rgb(" + imagedata.data[0] + ", " + imagedata.data[1] + ", " + imagedata.data[2] + ", " + Math.round(imagedata.data[3]/255*100)/100  + ")"
-        ScoreCount(s_select[rgb]);
+        if(s_select[rgb]){
+            ScoreCount(s_select[rgb]);
+        }
+        
     }
 
     canvas.addEventListener('click', onClick, false);
