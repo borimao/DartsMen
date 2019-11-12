@@ -2,6 +2,7 @@ const p_num = 4
 const zero_one = 301;
 const myXml = new XMLHttpRequest();
 
+let socket;
 let logs = {
     now:{player:0, throw:0, round:1},
     players:[],
@@ -31,12 +32,13 @@ myXml.onreadystatechange = function() {
                         '',
                         zero_one,
                     ]
-                    
+
                 ]
             })
         }
         document.querySelectorAll(".player")[0].classList.add("play");
         BoadMake();
+        socket = io();
         let copy_logs = JSON.parse(JSON.stringify(logs))
         back_up_log.logs.push(copy_logs);
         back_up_log.nowlog = back_up_log.logs.length-1;
@@ -45,7 +47,6 @@ myXml.onreadystatechange = function() {
 
 myXml.open("GET", "/htmls/score.html", true);
 myXml.send(null);
-    
 
 const ScoreCount = (sco) => {
     if(back_up_log.nowlog + 1 < back_up_log.logs.length){ //いらないバックアップを消すやつ
@@ -55,7 +56,7 @@ const ScoreCount = (sco) => {
             back_up_log.logs.push(copy.logs[i])
         }
     }
-    
+
     let now = logs.now;
     let player = logs.players[now.player];
     let sco_num;
@@ -71,7 +72,7 @@ const ScoreCount = (sco) => {
     else{
         sco_num = 0;
     }
-    
+
     if(now.round >= player.log.length){
         player.log.push([
             '',
@@ -181,7 +182,7 @@ const BoadMake = () => {
                 let num = 1 - (i-15)/100
                 rgb = "rgb(0, 0, 1, " +  num + ")";
             }
-            
+
         }
         else{
             if(i < 5){
@@ -228,7 +229,7 @@ const BoadMake = () => {
                 let num = 1 - (i-15)/100
                 rgb = "rgb(0, 0, 1, " +  num + ")";
             }
-            
+
         }
         else{
             if(i < 5){
@@ -389,7 +390,7 @@ const BoadMake = () => {
         if(s_select[rgb]){
             ScoreCount(s_select[rgb]);
         }
-        
+
     }
 
     canvas.addEventListener('click', onClick, false);
