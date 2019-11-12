@@ -1,109 +1,155 @@
-const p_num = 4
+const p_num = 2
 const zero_one = 301;
 const myXml = new XMLHttpRequest();
-const player = [];
-let now = {player:0, throw:0, round:1};
+
+let logs = {
+    now:{player:0, throw:0, round:1},
+    players:[],
+    finish:false
+};
+let back_up_log = {
+    nowlog:0,
+    logs:[]
+};
+
 myXml.onreadystatechange = function() {
     if ((myXml.readyState === 4) && (myXml.status === 200)) {
         for(let i=0; i<p_num; i++){
             document.querySelector(".scores").innerHTML += myXml.responseText;
-            console.log(myXml.responseText)
         }
         for(let i=0; i<p_num; i++){
             document.querySelectorAll(".player")[i].classList.add("p_" + i);
             document.querySelectorAll(".score_num")[i].innerText = zero_one;
-            player.push([
-                '/',
-                '/',
-                '/',
-                zero_one,
-                zero_one
-            ])
+            logs.players.push({
+                name:"player_" + (i+1),
+                score:zero_one,
+                log:[
+                    [
+                        '',
+                        '',
+                        '',
+                        zero_one,
+                    ]
+                    
+                ]
+            })
         }
         document.querySelectorAll(".player")[0].classList.add("play_" + 0);
         BoadMake();
+        let copy_logs = JSON.parse(JSON.stringify(logs))
+        back_up_log.logs.push(copy_logs);
+        back_up_log.nowlog = back_up_log.logs.length-1;
     }
-    
 }
 
 myXml.open("GET", "/htmls/score.html", true);
 myXml.send(null);
     
-// 点をカウントするやつ
+
 const ScoreCount = (sco) => {
-    player[now.player][now.throw] = sco;
-    if(sco.match(/×/)){
-        player[now.player][3] -= Number(sco.split('×')[0]) * Number(sco.split('×')[1])
-    }
-    else if(sco.match(/BULL/)){
-        player[now.player][3] -= 50
-    }
-    else if(sco.match(/[+-]?\d+/)){
-        player[now.player][3] -= sco;
-    }
-    else{
-        player[now.player][3] -= 0
+    if(back_up_log.nowlog + 1 < back_up_log.logs.length){ //いらないバックアップを消すやつ
+        let copy = JSON.parse(JSON.stringify(back_up_log))
+        back_up_log.logs = [];
+        for(let i=0; i<=copy.nowlog; i++){
+            back_up_log.logs.push(copy.logs[i])
+        }
     }
     
-    document.querySelectorAll('.log')[now.player].children[now.throw].innerText = sco;
+    let now = logs.now;
+    let player = logs.players[now.player];
+    let sco_num;
+    if(sco.match(/×/)){
+        sco_num = Number(sco.split('×')[0]) * Number(sco.split('×')[1]);
+    }
+    else if(sco.match(/BULL/)){
+        sco_num = 50;
+    }
+    else if(sco.match(/[+-]?\d+/)){
+        sco_num = sco;
+    }
+    else{
+        sco_num = 0;
+    }
+    
+    if(now.round >= player.log.length){
+        player.log.push([
+            '',
+            '',
+            '',
+            player.score,
+        ])
+        ScoreChange();
+    }
 
-    if(player[now.player][3] < 0){ 　　　//バーストした時
-        player[now.player][3] = player[now.player][4]
-        document.querySelectorAll(".score_num")[now.player].innerText = player[now.player][3]
-        document.querySelectorAll(".player")[now.player].classList.remove("play_" + now.player);
+    player.log[now.round]
+    player.log[now.round][now.throw] = sco;
+    player.score -= sco_num;
+
+    if(player.score < 0){ //バーストした時
+        console.log(player.log[now.round - 1][3])
+        player.log[now.round][3] = player.log[now.round - 1][3]
+        player.score = player.log[now.round - 1][3]
+        now.throw = 0;
         now.player++
-        if(now.player != p_num){
-            document.querySelectorAll('.log')[now.player].children[0].innerText = "";
-            document.querySelectorAll('.log')[now.player].children[1].innerText = "";
-            document.querySelectorAll('.log')[now.player].children[2].innerText = "";
-        }
-        now.throw = 0
-        if(now.player == p_num){
-            now.player = 0;
-            now.throw = 0;
-            now.round += 1;
-            document.querySelector('.round_count').innerText = now.round;
-            document.querySelectorAll('.log')[now.player].children[0].innerText = "";
-            document.querySelectorAll('.log')[now.player].children[1].innerText = "";
-            document.querySelectorAll('.log')[now.player].children[2].innerText = "";
-        }
-        document.querySelectorAll(".player")[now.player].classList.add("play_" + now.player);
-    }else{　
-        document.querySelectorAll(".score_num")[now.player].innerText = player[now.player][3]
-        document.querySelectorAll(".player")[now.player].classList.remove("play_" + now.player);
+    }
+    else if(player.score == 0){ //ゲーム終了した時
+        player.log[now.round][3] = 0;
+        logs.finish = true
+        console.log("finish!!")
+    }
+    else {
+        player.log[now.round][3] = player.score;
         if(now.throw < 2){
             now.throw++
         }else{
-            player[now.player][4] = player[now.player][3]
-            now.player++
-            if(now.player != p_num){
-                document.querySelectorAll('.log')[now.player].children[0].innerText = "";
-                document.querySelectorAll('.log')[now.player].children[1].innerText = "";
-                document.querySelectorAll('.log')[now.player].children[2].innerText = "";
-            }
             now.throw = 0
+            now.player++
         }
-        if(now.player == p_num){
-            now.player = 0;
-            now.throw = 0;
-            now.round += 1;
-            document.querySelector('.round_count').innerText = now.round;
-            document.querySelectorAll('.log')[now.player].children[0].innerText = "";
-            document.querySelectorAll('.log')[now.player].children[1].innerText = "";
-            document.querySelectorAll('.log')[now.player].children[2].innerText = "";
-        }
-        document.querySelectorAll(".player")[now.player].classList.add("play_" + now.player);
     }
-    
-
-
-    
-
+    if(now.player == p_num){ // ラウンド切り替え
+        now.player = 0;
+        now.round += 1;
+    }
+    let copy_logs = JSON.parse(JSON.stringify(logs))
+    back_up_log.logs.push(copy_logs);
+    back_up_log.nowlog += 1
+    if(back_up_log.nowlog > 0){
+        document.querySelector('.back').classList.remove("invisible");
+    }
+    ScoreChange();
 }
 
+const BackLog = () => {
+    back_up_log.nowlog -= 1;
+    if(back_up_log.nowlog == 0){
+        document.querySelector('.back').classList.add('invisible')
+    }
+    logs = back_up_log.logs[back_up_log.nowlog];
+    ScoreChange();
+}
+
+//スコアを画面に反映させるやつ
+const ScoreChange = ()=> {
+    let now = logs.now;
+    for(let i=0; i<logs.players.length; i++){
+        document.querySelectorAll(".player")[i].classList.remove("play_" + i);
+        document.querySelectorAll(".score_num")[i].innerText = logs.players[i].score;
+        for(let j=0; j<3; j++){
+            document.querySelectorAll('.log')[i].children[j].innerText = logs.players[i].log[logs.players[i].log.length - 1][j];
+        }
+    }
+    if(now.throw == 0){
+        for(let j=0; j<3; j++){
+            document.querySelectorAll('.log')[now.player].children[j].innerText = "";
+        }
+    }
+    document.querySelector('.round_count').innerText = now.round;
+    document.querySelectorAll(".player")[now.player].classList.add("play_" + now.player);
+}
+
+//ダーツボード生成するやつ
 const BoadMake = () => {
     const score = ["10","15","2","17","3","19","7","16","8","11","14","9","12","5","20","1","18","4","13","6"]
-    //const score = [10,15,2,17,3,19,7,16,8,11,14,9,12,5,20,1,18,4,13,6]
     let s_select = {};
     const canvas = document.getElementById("canvas");
     canvas.width = document.body.clientHeight;
