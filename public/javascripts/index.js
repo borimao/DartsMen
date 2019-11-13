@@ -1,4 +1,4 @@
-const p_num = 4
+const p_num = 1
 const zero_one = 301;
 const myXml = new XMLHttpRequest();
 
@@ -22,6 +22,8 @@ myXml.onreadystatechange = function() {
             document.querySelectorAll(".player")[i].classList.add("p_" + i);
             document.querySelectorAll(".score_num")[i].innerText = zero_one;
             document.querySelectorAll(".name")[i].innerText = "PLAYER_" + (i + 1);
+            document.querySelectorAll(".name")[i].num = i;
+            document.querySelectorAll(".name")[i].addEventListener('click', (e) => NameChange(e));
             logs.players.push({
                 name:"player_" + (i+1),
                 score:zero_one,
@@ -47,6 +49,14 @@ myXml.onreadystatechange = function() {
 
 myXml.open("GET", "/htmls/score.html", true);
 myXml.send(null);
+
+const NameChange = (e) => {
+  const target = e.target;
+  user = window.prompt("ユーザー名を入力してください\nユーザー名を入力すればログを貯められる!", "");
+  logs.players[target.num].name = user;
+  target.innerText = user;
+  console.log(logs);
+}
 
 const ScoreCount = (sco) => {
     if(back_up_log.nowlog + 1 < back_up_log.logs.length){ //いらないバックアップを消すやつ
@@ -96,7 +106,8 @@ const ScoreCount = (sco) => {
     }
     else if(player.score == 0){ //ゲーム終了した時
         player.log[now.round][3] = 0;
-        logs.finish = true
+        logs.finish = true;
+        socket.emit('data_save', logs.players);
         console.log("finish!!")
     }
     else {
