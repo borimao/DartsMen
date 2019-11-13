@@ -1,3 +1,82 @@
+const p_num = 2
+const zero_one = 1;
+const max_round = 8;
+const myXml = new XMLHttpRequest();
+
+let socket;
+let logs = {
+    now:{player:0, throw:0, round:1},
+    players:[],
+    finish:false
+};
+let back_up_log = {
+    nowlog:0,
+    logs:[]
+};
+
+
+let score_out
+window.onload = () => {
+    score_out = ScoreCount.bind(null, 'OUT')
+    document.getElementsByClassName('out')[0].addEventListener('click', score_out, true);
+}
+
+
+//名前入力
+const NameChange = (e) => {
+    const target = e.target;
+    user = window.prompt("ユーザー名を入力してください\nユーザー名を入力すればログを貯められる!", "");
+    logs.players[target.num].name = user;
+    target.innerText = user;
+    console.log(logs);
+}
+
+//ログの巻き戻し
+const BackLog = () => {
+    if(logs.finish){
+        document.getElementsByClassName('final_score')[0].classList.add("invisible");
+        document.getElementById("ranking").innerHTML = "";
+        const out = document.getElementsByClassName('out')[0];
+        out.innerText = "OUT"
+        out.removeEventListener('click', GoHome, true);
+        out.addEventListener('click', score_out, true);
+    }
+    back_up_log.nowlog -= 1;
+    if(back_up_log.nowlog == 0){
+        document.querySelector('.back').classList.add('invisible')
+    }
+    logs = back_up_log.logs[back_up_log.nowlog];
+    
+    ScoreChange();
+}
+
+const GoHome = () => {
+    location.href="/";
+}
+
+//スコアを画面に反映させるやつ
+const ScoreChange = ()=> {
+    let now = logs.now;
+    for(let i=0; i<logs.players.length; i++){
+        document.querySelectorAll(".player")[i].classList.remove("play");
+        document.querySelectorAll(".score_num")[i].innerText = logs.players[i].score;
+        for(let j=0; j<3; j++){
+            document.querySelectorAll('.log')[i].children[j].innerText = logs.players[i].log[logs.players[i].log.length - 1][j];
+        }
+    }
+    if(!logs.finish){
+        if(now.throw == 0){
+            for(let j=0; j<3; j++){
+                document.querySelectorAll('.log')[now.player].children[j].innerText = "";
+            }
+        }
+        document.querySelector('.round_count').innerText = now.round;
+        document.querySelectorAll(".player")[now.player].classList.add("play");
+    }
+    
+}
+
+
 //ダーツボード生成するやつ
 const BoadMake = () => {
     const score = ["10","15","2","17","3","19","7","16","8","11","14","9","12","5","20","1","18","4","13","6"]
