@@ -26,7 +26,7 @@ myXml.onreadystatechange = function() {
             })
         }
         document.querySelectorAll(".player")[0].classList.add("play");
-        BoadMake();
+        BoardMake();
         socket = io();
         let copy_logs = JSON.parse(JSON.stringify(logs))
         back_up_log.logs.push(copy_logs);

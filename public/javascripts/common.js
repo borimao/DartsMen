@@ -1,5 +1,5 @@
 const p_num = 2
-const zero_one = 1;
+const zero_one = 301;
 const max_round = 8;
 const myXml = new XMLHttpRequest();
 
@@ -78,7 +78,7 @@ const ScoreChange = ()=> {
 
 
 //ダーツボード生成するやつ
-const BoadMake = () => {
+const BoardMake = () => {
     const score = ["10","15","2","17","3","19","7","16","8","11","14","9","12","5","20","1","18","4","13","6"]
     let s_select = {};
     const canvas = document.getElementById("canvas");
