@@ -1,5 +1,6 @@
-const p_num = 1
+const p_num = 2
 const zero_one = 301;
+const max_round = 8;
 const myXml = new XMLHttpRequest();
 
 let socket;
@@ -13,132 +14,44 @@ let back_up_log = {
     logs:[]
 };
 
-myXml.onreadystatechange = function() {
-    if ((myXml.readyState === 4) && (myXml.status === 200)) {
-        for(let i=0; i<p_num; i++){
-            document.querySelector(".scores").innerHTML += myXml.responseText;
-        }
-        for(let i=0; i<p_num; i++){
-            document.querySelectorAll(".player")[i].classList.add("p_" + i);
-            document.querySelectorAll(".score_num")[i].innerText = zero_one;
-            document.querySelectorAll(".name")[i].innerText = "PLAYER_" + (i + 1);
-            document.querySelectorAll(".name")[i].num = i;
-            document.querySelectorAll(".name")[i].addEventListener('click', (e) => NameChange(e));
-            logs.players.push({
-                name:"player_" + (i+1),
-                score:zero_one,
-                log:[
-                    [
-                        '',
-                        '',
-                        '',
-                        zero_one,
-                    ]
 
-                ]
-            })
-        }
-        document.querySelectorAll(".player")[0].classList.add("play");
-        BoadMake();
-        socket = io();
-        let copy_logs = JSON.parse(JSON.stringify(logs))
-        back_up_log.logs.push(copy_logs);
-        back_up_log.nowlog = back_up_log.logs.length-1;
-    }
+let score_out
+window.onload = () => {
+    score_out = ScoreCount.bind(null, 'OUT')
+    document.getElementsByClassName('out')[0].addEventListener('click', score_out, true);
 }
 
-myXml.open("GET", "/htmls/score.html", true);
-myXml.send(null);
 
+//名前入力
 const NameChange = (e) => {
-  const target = e.target;
-  user = window.prompt("ユーザー名を入力してください\nユーザー名を入力すればログを貯められる!", "");
-  logs.players[target.num].name = user;
-  target.innerText = user;
-  console.log(logs);
+    const target = e.target;
+    user = window.prompt("ユーザー名を入力してください\nユーザー名を入力すればログを貯められる!", "");
+    logs.players[target.num].name = user;
+    target.innerText = user;
+    console.log(logs);
 }
 
-const ScoreCount = (sco) => {
-    if(back_up_log.nowlog + 1 < back_up_log.logs.length){ //いらないバックアップを消すやつ
-        let copy = JSON.parse(JSON.stringify(back_up_log))
-        back_up_log.logs = [];
-        for(let i=0; i<=copy.nowlog; i++){
-            back_up_log.logs.push(copy.logs[i])
-        }
-    }
-
-    let now = logs.now;
-    let player = logs.players[now.player];
-    let sco_num;
-    if(sco.match(/×/)){
-        sco_num = Number(sco.split('×')[0]) * Number(sco.split('×')[1]);
-    }
-    else if(sco.match(/BULL/)){
-        sco_num = 50;
-    }
-    else if(sco.match(/[+-]?\d+/)){
-        sco_num = sco;
-    }
-    else{
-        sco_num = 0;
-    }
-
-    if(now.round >= player.log.length){
-        player.log.push([
-            '',
-            '',
-            '',
-            player.score,
-        ])
-        ScoreChange();
-    }
-
-    player.log[now.round]
-    player.log[now.round][now.throw] = sco;
-    player.score -= sco_num;
-
-    if(player.score < 0){ //バーストした時
-        console.log(player.log[now.round - 1][3])
-        player.log[now.round][3] = player.log[now.round - 1][3]
-        player.score = player.log[now.round - 1][3]
-        now.throw = 0;
-        now.player++
-    }
-    else if(player.score == 0){ //ゲーム終了した時
-        player.log[now.round][3] = 0;
-        logs.finish = true;
-        socket.emit('data_save', logs.players);
-        console.log("finish!!")
-    }
-    else {
-        player.log[now.round][3] = player.score;
-        if(now.throw < 2){
-            now.throw++
-        }else{
-            now.throw = 0
-            now.player++
-        }
-    }
-    if(now.player == p_num){ // ラウンド切り替え
-        now.player = 0;
-        now.round += 1;
-    }
-    let copy_logs = JSON.parse(JSON.stringify(logs))
-    back_up_log.logs.push(copy_logs);
-    back_up_log.nowlog += 1
-    if(back_up_log.nowlog > 0){
-        document.querySelector('.back').classList.remove("invisible");
-    }
-    ScoreChange();
-}
-
+//ログの巻き戻し
 const BackLog = () => {
+    if(logs.finish){
+        document.getElementsByClassName('final_score')[0].classList.add("invisible");
+        document.getElementById("ranking").innerHTML = "";
+        const out = document.getElementsByClassName('out')[0];
+        out.innerText = "OUT"
+        out.removeEventListener('click', GoHome, true);
+        out.addEventListener('click', score_out, true);
+    }
     back_up_log.nowlog -= 1;
     if(back_up_log.nowlog == 0){
         document.querySelector('.back').classList.add('invisible')
     }
     logs = back_up_log.logs[back_up_log.nowlog];
+    
     ScoreChange();
+}
+
+const GoHome = () => {
+    location.href="/";
 }
 
 //スコアを画面に反映させるやつ
@@ -151,17 +64,21 @@ const ScoreChange = ()=> {
             document.querySelectorAll('.log')[i].children[j].innerText = logs.players[i].log[logs.players[i].log.length - 1][j];
         }
     }
-    if(now.throw == 0){
-        for(let j=0; j<3; j++){
-            document.querySelectorAll('.log')[now.player].children[j].innerText = "";
+    if(!logs.finish){
+        if(now.throw == 0){
+            for(let j=0; j<3; j++){
+                document.querySelectorAll('.log')[now.player].children[j].innerText = "";
+            }
         }
+        document.querySelector('.round_count').innerText = now.round;
+        document.querySelectorAll(".player")[now.player].classList.add("play");
     }
-    document.querySelector('.round_count').innerText = now.round;
-    document.querySelectorAll(".player")[now.player].classList.add("play");
+    
 }
 
+
 //ダーツボード生成するやつ
-const BoadMake = () => {
+const BoardMake = () => {
     const score = ["10","15","2","17","3","19","7","16","8","11","14","9","12","5","20","1","18","4","13","6"]
     let s_select = {};
     const canvas = document.getElementById("canvas");

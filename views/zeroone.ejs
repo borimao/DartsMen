@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/common.js"></script>
+    <script src="/javascripts/zeroone.js"></script>
+  </head>
+  <body>
+    <div class="scores"></div>
+    <div class="boad_area">
+      <canvas id="canvas" width="730" height="730"></canvas>
+      <div class="round_area">ROUND <span class="round_count">1</span></div>
+      <div class="final_score invisible">
+        <ul id="ranking">
+        </ul>
+      </div>
+      <div class="back_btn_area">
+        <button class="back invisible" onclick="BackLog()">←Back</button>
+      </div>
+      <button class="out">OUT</button>
+    </div>
+  </body>
+</html>

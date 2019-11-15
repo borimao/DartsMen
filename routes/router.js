@@ -7,7 +7,11 @@ router.get('/', function (req, res, next) {
 });
 /* GET zero-one page. */
 router.get('/zero-one', function (req, res, next) {
-    res.render('index', { title: 'Express' });
+    res.render('zeroone', { title: 'ZeroOne' });
+});
+/* GET count-uo page. */
+router.get('/count-up', function (req, res, next) {
+    res.render('countup', { title: 'CountUp' });
 });
 /* GET users listing. */
 router.get('/users', function (req, res, next) {
