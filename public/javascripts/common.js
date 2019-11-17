@@ -1,6 +1,24 @@
-const p_num = 2
-const zero_one = 301;
-const max_round = 8;
+let p_num = 2
+let zero_one = 301;
+let max_round = 8;
+
+let urlParams = location.search.substring(1);
+let set_name;
+if(urlParams) {
+    const param = urlParams.split('&');
+    let paramArray = [];
+    for (i = 0; i < param.length; i++) {
+      let paramItem = param[i].split('=');
+      paramArray[paramItem[0]] = paramItem[1];
+    }
+    if(paramArray.p) p_num = paramArray.p
+    if(paramArray.s) zero_one = paramArray.s
+    if(paramArray.r) max_round = paramArray.r
+    if(paramArray.player){
+        set_name = paramArray.player.split(",");
+    }
+}
+
 const myXml = new XMLHttpRequest();
 
 let socket;

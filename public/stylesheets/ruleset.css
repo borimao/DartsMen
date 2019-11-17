@@ -1,0 +1,277 @@
+/* 共通設定 ---------------------------------------*/
+html,body{
+    height: 100%;
+    width: 100%;
+    display: inline;
+}
+button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    appearance: none;
+}
+
+/* 背景画像 ------------------------------------------*/
+img {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80%;
+    z-index: -1;
+    opacity: 0.4;
+}
+
+/* 画面分割 --------------------------------------------*/
+#rule {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+#left {
+    width: 750px;
+}
+#right {
+    width: calc(100% - 750px);
+}
+
+/* タイトル --------^-^----------------------------------*/
+#title {
+    height: 120px;
+}
+#title h1 {
+    height: 100%;
+    line-height: 120px;
+    font-size: 70px;
+    color: #fff;
+    padding-left: 60px;
+}
+
+/* ルール設定 --------------------------------------------------*/
+.rule-select {
+    width: 750px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+.select-area {
+    overflow: hidden;
+    width: 600px;
+    background-color: #fff;
+    display: flex;
+    height: 50px;
+    margin-top: 20px;
+    border: solid 3px rgb(117, 117, 117);
+}
+.select-area .s-text {
+    position: relative;
+    height: 100%;
+    flex-basis:50%;
+    color: #fff;
+    text-align: center;
+    font-size: 30px;
+    line-height: 50px;
+}
+.select-area .s-text .slash{
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: 310px;
+    height: 100%;
+    transform:skewX(165deg);
+    background-color: rgb(117, 117, 117);
+}
+.select-area .s-text p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    font-weight: bold;
+}
+.select-area .select-item {
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+.select-area .select-item .select-display {
+    width: 200px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+.select-area .select-item .select-btn {
+    width: 60px;
+    height: 50px;
+    color: rgb(255, 153, 0);
+    font-size: 25px;
+}
+.select-area .select-item .down div {
+    transform: rotate(270deg);
+}
+.select-area .select-item .up div {
+    transform: rotate(90deg);
+
+}
+
+/* イメージ画像 -------------------------------------*/
+#img-area {
+    width: 100%;
+    height: calc(100% - 150px);
+    overflow: hidden;
+    position: relative;
+}
+#img-area #img-back {
+    position: absolute;
+    top: 0;
+    right: -30px;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(143, 143, 143);
+    transform:skewX(185deg);
+    overflow: hidden;
+}
+#img-area #img-back img {
+    position: absolute;
+    top: 0;
+    left: -200px;
+    height: 100%;
+    width: auto;
+    overflow: hidden;
+    transform:skewX(175deg);
+    opacity: 1;
+}
+
+/* ゲーム開始ボタン  ----------------------------------*/
+#btn-area {
+    width: 100%;
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+}
+#start {
+    position: absolute;
+    top: 0;
+    right: -20px;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    transform:skewX(165deg);
+}
+#start #dark {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: calc(100% - 5px);
+    height: calc(100% - 5px);
+    background-color: rgb(56, 56, 56);
+}
+#start #dark #yellow {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: calc(100% - 60px);
+    height: calc(100% - 5px);
+    background-color: rgb(255, 238, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 100px;
+    font-weight: bold;
+    color: rgb(182, 109, 0);
+}
+
+/* ユーザー表示 ----------------------------------------*/
+#users {
+    width: 750px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+#users .user {
+    width: 606px;
+    display: flex;
+    height: 56px;
+    margin-top: 20px;
+    position: relative;
+}
+#users .user .name {
+    border: solid 3px rgb(117, 117, 117);
+    position: absolute;
+    top: 0;
+    right: 0px;
+    background-color: #fff;
+    height: calc(100% - 6px);
+    width: calc(50% + 2px);
+    line-height: 50px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+#users .user .bye {
+    right: 700px;
+}
+
+/* ユーザー名の設定 -----------------------*/
+.user-select-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(36, 36, 36, 0.4);
+    display: flex;
+    justify-content: center;
+}
+.invisible {
+    display: none;
+}
+.user-select-shadow #user-select-area {
+    width: 300px;
+    height: 375px;
+    background-color: rgba(29, 29, 29, 0.7);
+    -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+    border-radius: 20px;
+    color: #fff;
+    text-align: center;
+}
+#alert-title {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 550;
+}
+#alert-message {
+    font-size: 12px;
+    font-weight: 200;
+}
+#user-list {
+    border-top: rgba(255, 255, 255, 0.3) 1px solid;
+    border-bottom: rgba(255, 255, 255, 0.3) 1px solid;
+    margin-top: 5px;
+    height: 200px;
+    overflow: scroll;
+}
+.user-name {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: rgba(255, 255, 255, 0.3) 1px solid;
+    font-size: 20px;
+}
+.user-action {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: rgba(255, 255, 255, 0.3) 1px solid;
+    font-size: 20px;
+    color: rgba(136, 197, 255, 0.9);
+    font-weight: 300;
+}
+#cancel {
+    border-bottom: none;
+}
+

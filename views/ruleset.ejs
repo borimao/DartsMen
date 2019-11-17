@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= gametipe %></title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/ruleset.css' />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/ruleset.js"></script>
+  </head>
+  <body>
+    <img src="/assets/<%= gametipe %>.png" alt="">
+    <div id="rule">
+      <div id="left">
+        <div id="title">
+          <h1>Rule Setting</h1>
+        </div>
+        <div class="rule-select">
+          <% if(gametipe === "zero-one"){ %>
+            <div class="select-area">
+              <div class="s-text">
+                <div class="slash"></div>
+                <p>FirstScore</p>
+              </div>
+              <div class="select-item">
+                <button class="select-btn down" onclick="Down('s')"><div>▲</div></button>
+                <div class="select-display" id="set-s">301</div>
+                <button class="select-btn up" onclick="Up('s')"><div>▲</div></button>
+              </div>
+            </div>
+          <% } %>
+          <div class="select-area">
+            <div class="s-text">
+              <div class="slash"></div>
+              <p>MaxRound</p>
+            </div>
+            <div class="select-item">
+              <button class="select-btn down" onclick="Down('r')"><div>▲</div></button>
+              <div class="select-display" id="set-r">8</div>
+              <button class="select-btn up" onclick="Up('r')"><div>▲</div></button>
+            </div>
+          </div>
+          <div class="select-area">
+            <div class="s-text">
+              <div class="slash"></div>
+              <p>Player</p>
+            </div>
+            <div class="select-item">
+              <button class="select-btn down" onclick="Down('p')"><div>▲</div></button>
+              <div class="select-display" id="set-p">2</div>
+              <button class="select-btn up" onclick="Up('p')"><div>▲</div></button>
+            </div>
+          </div>
+          <div id="users">
+            <div class="user">
+              <div class="name">
+                PLAYER_1
+              </div>
+            </div>
+            <div class="user">
+              <div class="name">
+                PLAYER_2
+              </div>
+            </div>
+            <div class="user">
+              <div class="name bye">
+                PLAYER_3
+              </div>
+            </div>
+            <div class="user">
+              <div class="name bye">
+                PLAYER_4
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="right">
+        <div id="img-area">
+          <div id="img-back">
+            <img src="/assets/dartsimage.jpg" alt="">
+          </div>
+        </div>
+        <div id="btn-area">
+            <button id="start">
+              <div id="dark">
+                <div id="yellow">
+                  <p>Play</p>
+                </div>
+              </div>
+            </button>
+        </div>
+      </div>
+    </div>
+    <div class="user-select-shadow invisible">
+      <div id="user-select-area">
+        <div id="alert-title">DartsMenの内容</div>
+        <div id="alert-message">ユーザーを選択してください<br>ユーザーを選択すればログを貯められる！</div>
+        <div id="user-list"></div>
+        <div id="add-user" class="user-action">ユーザーを追加</div>
+        <div id="cancel" class="user-action">キャンセル</div>
+      </div>
+    </div>
+  </body>
+</html>
