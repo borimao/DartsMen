@@ -80,14 +80,3 @@ body{
   font-family: Courier;
   font-size: 3rem;
 }
-
-/* darts kun */
-#darts-kun{
-  position: fixed;
-  top:  calc(50% - 35rem/2);
-  left: calc(50% - 35rem/2);
-  border-radius: 50%;
-  background-color: #333;
-  width: 35rem;
-  height: 35rem;
-}
