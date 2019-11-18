@@ -17,5 +17,10 @@ router.get('/count-up', function (req, res, next) {
 router.get('/users', function (req, res, next) {
     res.send('respond with a resource');
 });
+/* GET rule_Set page. */
+router.get('/rule-set', function (req, res, next) {
+    const gametipe = req.query.game
+    res.render('ruleset', { gametipe: gametipe });
+});
 
 module.exports = router;

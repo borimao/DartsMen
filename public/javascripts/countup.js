@@ -8,7 +8,7 @@ myXml.onreadystatechange = function() {
         for(let i=0; i<p_num; i++){
             document.querySelectorAll(".player")[i].classList.add("p_" + i);
             document.querySelectorAll(".score_num")[i].innerText = 0;
-            document.querySelectorAll(".name")[i].innerText = "PLAYER_" + (i + 1);
+            document.querySelectorAll(".name")[i].innerText = set_name[i];
             document.querySelectorAll(".name")[i].num = i;
             document.querySelectorAll(".name")[i].addEventListener('click', (e) => NameChange(e));
             logs.players.push({
