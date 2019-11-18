@@ -12,7 +12,7 @@ myXml.onreadystatechange = function() {
             document.querySelectorAll(".name")[i].num = i;
             document.querySelectorAll(".name")[i].addEventListener('click', (e) => NameChange(e));
             logs.players.push({
-                name:"player_" + (i+1),
+                name:set_name[i],
                 score:0,
                 log:[
                     [
