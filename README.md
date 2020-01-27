@@ -10,3 +10,6 @@
 1. npm install でサーバー実行に必要なパッケージ類をゲッツ
 1. npm start　でサーバー実行
 1. ブラウザでlocalhost:3000
+
+## URL
+http://jupiter.tntetsu-lab.cs.kanagawa-it.ac.jp/
